@@ -12,18 +12,21 @@ default['zookeeper']['install_dir'] = '/opt'
 default['zookeeper']['use_java_cookbook'] = true
 default['zookeeper']['config_dir']  = "#{node['zookeeper']['install_dir']}/zookeeper/conf"
 default['zookeeper']['conf_file']   = 'zoo.cfg'
-default['zookeeper']['java_opts']   = "-Xmx#{allocated_memory}"
+default['zookeeper']['java_opts']   =
+  "-Xmx#{allocated_memory} " \
+  '-Dzookeeper.serverCnxnFactory=org.apache.zookeeper.server.NettyServerCnxnFactory'
 default['zookeeper']['log_dir']     = '/var/log/zookeeper'
 
 # One of: 'upstart', 'runit', 'exhibitor', 'sysv', 'systemd'
 default['zookeeper']['service_style'] = 'runit'
 
 default['zookeeper']['config'] = {
-  'clientPort' => 2181,
-  'dataDir'    => '/var/lib/zookeeper',
-  'tickTime'   => 2000,
-  'initLimit'  => 5,
-  'syncLimit'  => 2
+  'clientPort'       => 2181,
+  'secureClientPort' => 2182,
+  'dataDir'          => '/var/lib/zookeeper',
+  'tickTime'         => 2000,
+  'initLimit'        => 5,
+  'syncLimit'        => 2
 }
 
 default['zookeeper']['env_vars'] = {}
