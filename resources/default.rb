@@ -49,10 +49,6 @@ action :install do
   node.override['build-essential']['compile_time'] = true
   include_recipe 'build-essential::default'
 
-  chef_gem 'zookeeper' do
-    compile_time false
-  end
-
   group username
 
   user username do
